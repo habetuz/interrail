@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
-    --bg-color: #F6F3EE
+    --bg-color: #F6F3EE;
+    --main-color: #efe1c7;
+    --main-dark-color: #281D17;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -8,6 +13,44 @@ body {
     padding: 0;
     margin: 0;
     background-color: var(--bg-color);
+}
+
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--main-dark-color)
+}
+
+floating-header {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}
+
+floating-header span {
+    font-weight: 600;
+    font-size: x-large;
+}
+
+floating-header #rail {
+    opacity: .77;
+}
+
+floating-header #wrapper {
+    position: absolute;
+    padding: 15px;
+}
+
+floating-header #bg {
+    position: absolute;
+    background-color: var(--main-color);
+    box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.2);
+    transition: width .1s, height .1s;
 }
 
 #map_container {

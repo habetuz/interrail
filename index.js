@@ -27,3 +27,5 @@ function resizeMap() {
         $('#map_container').css('transform', 'scale(' + yScale + ')')
     }
 }
+
+setTimeout(() => { floatingHeader.changeLanguage('de') }, 3000)
