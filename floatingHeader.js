@@ -9,17 +9,42 @@ class FloatingHeader extends HTMLElement {
     #inter = null
     #rail = null
 
+    #expanded = false
+
     #updateSize() {
+        if (this.#expanded) {
+            return;
+        }
+
+        var scrollProgress = clamp(1 - document.documentElement.scrollTop / 300, 0, 1)
+        var right = 15 + ($(window).width() - 15 * 2) * scrollProgress
+        var bottom = 15 + ($(window).height() - 15 * 2) * scrollProgress
+
         var wrapper = $('floating-header #wrapper')[0].getBoundingClientRect()
-        var bg = $('floating-header #bg')
-        bg.css('width', wrapper.width + 'px')
-        bg.css('height', wrapper.height + 'px')
+        var rightWrapper = $(window).width() - wrapper.left - wrapper.width
+        var bottomWrapper = $(window).height() - wrapper.top - wrapper.height
+        if (right == null || right > rightWrapper) {
+            right = rightWrapper
+        }
+        if (bottom == null || bottom > bottomWrapper) {
+            bottom = bottomWrapper
+        }
+
+        anime({
+            targets: 'floating-header #bg',
+            bottom: bottom + 'px',
+            right: right + 'px',
+            duration: 200,
+            easing: 'easeOutCubic'
+        })
     }
 
     constructor() {
         super()
         window.floatingHeader = this;
     }
+
+    onCreation
 
     connectedCallback() {
         fetch("/floatingHeader.html")
@@ -33,21 +58,64 @@ class FloatingHeader extends HTMLElement {
                 this.#inter = new TextScramble($('floating-header #inter')[0])
                 this.#rail = new TextScramble($('floating-header #rail')[0])
 
+                this.#expanded = this.getAttribute('expand') == 'true' ? true : false
+                this.setExpanded()
                 this.#updateSize()
-                new ResizeObserver(this.#updateSize).observe($('floating-header #wrapper')[0])
+                new ResizeObserver(() => { this.#updateSize }).observe($('floating-header #wrapper')[0])
+
+                window.addEventListener("scroll", () => {
+                    this.#updateSize()
+                })
+
+                window.addEventListener("resize", () => {
+                    console.log("here")
+                    this.#updateSize()
+                })
+
+                if (this.onCreation != null) {
+                    this.onCreation()
+                }
             })
     }
 
     attributeChangedCallback() {
         var lan = this.#translations[this.getAttribute('lan') ?? 'de']
-        if (this.#inter == null || this.#rail == null || lan == this.#lan) {
-            return
+        var expand = this.getAttribute('expand') == 'true' ? true : false
+
+        if (expand != this.#expanded) {
+            this.#expanded = expand
+            if (expand) {
+                anime({
+                    targets: 'floating-header #bg',
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    easing: 'easeInOutCubic',
+                    duration: 1000,
+                })
+            } else {
+                $('floating-header #bg')
+                    .css('left', '')
+                    .css('top', '')
+                this.#updateSize()
+            }
         }
 
-        this.#lan = lan
-        this.#inter.setText(this.#lan.inter)
-        this.#rail.setText(this.#lan.rail)
 
+        if (this.#inter != null && this.#rail != null && lan != this.#lan) {
+            this.#lan = lan
+            this.#inter.setText(this.#lan.inter)
+            this.#rail.setText(this.#lan.rail)
+        }
+    }
+
+    setExpanded(expand) {
+        this.setAttribute('expand', expand)
+    }
+
+    isExpanded() {
+        return this.#expanded
     }
 
     changeLanguage(lan) {
@@ -55,7 +123,7 @@ class FloatingHeader extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['lan']
+        return ['lan', 'expand']
     }
 }
 

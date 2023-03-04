@@ -21,7 +21,9 @@ function resizeMap() {
     var xScale = window.innerWidth / svgViewport.width()
     var yScale = window.innerHeight / svgViewport.height()
 
-    if (xScale < yScale) {
+    if (xScale < 1 || yScale < 1) {
+        $('#map_container').css('transform', 'scale(1)')
+    } else if (xScale < yScale) {
         $('#map_container').css('transform', 'scale(' + xScale + ')')
     } else {
         $('#map_container').css('transform', 'scale(' + yScale + ')')
@@ -29,3 +31,10 @@ function resizeMap() {
 }
 
 setTimeout(() => { floatingHeader.changeLanguage('de') }, 3000)
+
+floatingHeader.onCreation = () => {
+    $('floating-header #bg').click(() => {
+        console.log(floatingHeader.isExpanded())
+        floatingHeader.setExpanded(!floatingHeader.isExpanded())
+    })
+}
