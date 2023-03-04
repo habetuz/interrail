@@ -61,14 +61,13 @@ class FloatingHeader extends HTMLElement {
                 this.#expanded = this.getAttribute('expand') == 'true' ? true : false
                 this.setExpanded()
                 this.#updateSize()
-                new ResizeObserver(() => { this.#updateSize }).observe($('floating-header #wrapper')[0])
+                new ResizeObserver(() => { this.#updateSize() }).observe($('floating-header #wrapper')[0])
 
                 window.addEventListener("scroll", () => {
                     this.#updateSize()
                 })
 
                 window.addEventListener("resize", () => {
-                    console.log("here")
                     this.#updateSize()
                 })
 
