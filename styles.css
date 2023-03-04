@@ -12,7 +12,7 @@
 
 body {
     width: 100%;
-    height: 200vh;
+    height: 200lvh;
     padding: 0;
     margin: 0;
     background-color: var(--bg-color);
@@ -61,7 +61,7 @@ floating-header #bg {
 #map_container {
     position: fixed;
     width: 100%;
-    height: 100vh;
+    height: 100lvh;
     position: fixed;
     transform-origin: center;
 }
