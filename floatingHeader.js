@@ -20,9 +20,6 @@ class FloatingHeader extends HTMLElement {
         var right = 15 + ($(window).width() - 15 * 2) * scrollProgress
         var bottom = 15 + ($(window).height() - 15 * 2) * scrollProgress
 
-        var currRight = $('floating-header #bg')[0].getBoundingClientRect().right
-        var currBottom = $('floating-header #bg')[0].getBoundingClientRect().bottom
-
         var wrapper = $('floating-header #wrapper')[0].getBoundingClientRect()
         var rightWrapper = $(window).width() - wrapper.left - wrapper.width
         var bottomWrapper = $(window).height() - wrapper.top - wrapper.height
@@ -40,6 +37,14 @@ class FloatingHeader extends HTMLElement {
             duration: 200,
             easing: 'easeOutCubic'
         })
+
+        if (document.documentElement.scrollTop >= 300 && window.location.pathname == '/') {
+            page('/about/')
+        }
+        else if (document.documentElement.scrollTop < 300 && window.location.pathname == '/about/') {
+            page('/')
+        }
+
     }
 
     constructor() {

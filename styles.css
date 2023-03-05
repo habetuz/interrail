@@ -19,7 +19,6 @@ body {
 
 main {
     position: relative;
-    z-index: 1;
     pointer-events: none;
 }
 
@@ -69,6 +68,7 @@ floating-header #bg {
     box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.2);
     left: 15px;
     top: 15px;
+    z-index: -1;
 }
 
 #map_container {

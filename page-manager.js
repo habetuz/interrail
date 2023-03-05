@@ -1,5 +1,32 @@
 var request;
 
+function home(context, next) {
+    console.log('home')
+    $('main').css('height', 'calc(100vh + 300px)')
+    next()
+}
+
+function about(context, next) {
+    console.log('about')
+    window.scrollTo(0, 300)
+    if (context.content == null) {
+        return
+    }
+    $('main')
+        .html(context.content)
+        .css('height', '')
+    next()
+}
+
+function test(context, next) {
+    if (context.content == null) {
+        return
+    }
+    console.log('test')
+    $('main').html(context.content)
+    next()
+}
+
 function notFound(context, next) {
     if (window.location.pathname == context.pathname) {
         next()
@@ -23,34 +50,8 @@ function resolve(context, next) {
     })
 }
 
-function home(context, next) {
-    if (context.content == null) {
-        return
-    }
-    console.log('home')
-    $('main').css('height', '200vh')
-    $('main').html(context.content)
-    next()
-}
-
-function test(context, next) {
-    if (context.content == null) {
-        return
-    }
-    console.log('test')
-    $('main').html(context.content)
-    next()
-}
-
 function transitionOut(context, next) {
     console.log('out')
-    if (context.pathname == '/') {
-        floatingHeader.expanded = false
-    }
-    else {
-        floatingHeader.expanded = true
-    }
-    requestContent(context.pathname)
     anime({
         targets: 'main>*',
         translateY: [0, 20],
@@ -58,11 +59,7 @@ function transitionOut(context, next) {
         duration: 500,
         easing: 'easeInOutCubic',
         complete: () => {
-            $('main')
-                .html('')
-                .css('height', '')
-
-            window.scrollTo(0, 0)
+            $('main').html('')
             next()
         },
     })
@@ -77,19 +74,25 @@ function transitionIn(context, next) {
         duration: 500,
         easing: 'easeInOutCubic',
         complete: () => {
-            window.scrollTo(0, 0)
-            next()
         },
     })
 }
 
-function requestContent(path) {
+function requestContent(context, next) {
+    var path = context.pathname
     if (path[path.length - 1] != '/') {
         path += '/'
     }
     request = fetch(path + 'content.html')
+    next()
 }
 
-page('/', transitionOut, resolve, home, transitionIn)
-page('/test', transitionOut, resolve, test, transitionIn)
+function resetScroll(context, next) {
+    window.scrollTo(0, 0)
+    next()
+}
+
+page('/', transitionOut, home, transitionIn)
+page('/about/', requestContent, transitionOut, resolve, about, transitionIn)
+page('/test/', requestContent, transitionOut, resetScroll, resolve, test, transitionIn)
 page()
