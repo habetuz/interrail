@@ -1,4 +1,4 @@
-var content;
+var request;
 
 function notFound(context, next) {
     if (window.location.pathname == context.pathname) {
@@ -8,21 +8,38 @@ function notFound(context, next) {
     next()
 }
 
-function home(context, next) {
-    content.then(content => {
-        console.log('home')
-        $('main').css('height', '200vh')
-        $('main').html(content)
+function resolve(context, next) {
+    request.then(
+        success => success.text(),
+        fail => "network error",
+    ).then(result => {
+        if (result == "network error") {
+            // Handle network error
+        }
+        else {
+            context.content = result
+        }
         next()
     })
 }
 
+function home(context, next) {
+    if (context.content == null) {
+        return
+    }
+    console.log('home')
+    $('main').css('height', '200vh')
+    $('main').html(context.content)
+    next()
+}
+
 function test(context, next) {
-    content.then(content => {
-        console.log('test')
-        $('main').html(content)
-        next()
-    })
+    if (context.content == null) {
+        return
+    }
+    console.log('test')
+    $('main').html(context.content)
+    next()
 }
 
 function transitionOut(context, next) {
@@ -70,10 +87,9 @@ function requestContent(path) {
     if (path[path.length - 1] != '/') {
         path += '/'
     }
-    fetch(path + 'content.html')
-        .then(data => { content = data.text() })
+    request = fetch(path + 'content.html')
 }
 
-page('/', transitionOut, home, transitionIn)
-page('/test', transitionOut, test, transitionIn)
+page('/', transitionOut, resolve, home, transitionIn)
+page('/test', transitionOut, resolve, test, transitionIn)
 page()
