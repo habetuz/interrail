@@ -1,3 +1,4 @@
+var content;
 
 function notFound(context, next) {
     if (window.location.pathname == context.pathname) {
@@ -8,47 +9,71 @@ function notFound(context, next) {
 }
 
 function home(context, next) {
-    getContent(context.pathname, (content) => {
-        console.log(content)
+    content.then(content => {
+        console.log('home')
         $('main').css('height', '200vh')
         $('main').html(content)
-        floatingHeader.expanded = false
-        window.scrollTo(0, 0)
         next()
     })
 }
 
-function homeExit(context, next) {
-    floatingHeader.expanded = true
-    $('main').css('height', '')
-    next()
-}
-
 function test(context, next) {
-    getContent(context.pathname, (content) => {
+    content.then(content => {
+        console.log('test')
         $('main').html(content)
         next()
     })
 }
 
 function transitionOut(context, next) {
-    window.scrollTo(0, 0)
-    $('main').html('')
+    console.log('out')
+    if (context.pathname == '/') {
+        floatingHeader.expanded = false
+    }
+    else {
+        floatingHeader.expanded = true
+    }
+    requestContent(context.pathname)
+    anime({
+        targets: 'main>*',
+        translateY: [0, 20],
+        opacity: 0,
+        duration: 500,
+        easing: 'easeInOutCubic',
+        complete: () => {
+            $('main')
+                .html('')
+                .css('height', '')
 
-    next()
+            window.scrollTo(0, 0)
+            next()
+        },
+    })
 }
 
 function transitionIn(context, next) {
-    next()
+    console.log('in')
+    anime({
+        targets: 'main>*',
+        translateY: [20, 0],
+        opacity: 1,
+        duration: 500,
+        easing: 'easeInOutCubic',
+        complete: () => {
+            window.scrollTo(0, 0)
+            next()
+        },
+    })
 }
 
-function getContent(path, callback) {
+function requestContent(path) {
+    if (path[path.length - 1] != '/') {
+        path += '/'
+    }
     fetch(path + 'content.html')
-        .then(data => { return data.text() })
-        .then(html => callback(html))
+        .then(data => { content = data.text() })
 }
 
 page('/', transitionOut, home, transitionIn)
 page('/test', transitionOut, test, transitionIn)
-page.exit('/', homeExit)
 page()

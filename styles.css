@@ -27,6 +27,10 @@ main * {
     pointer-events: all;
 }
 
+main>* {
+    opacity: 0;
+}
+
 p,
 span,
 h1,
