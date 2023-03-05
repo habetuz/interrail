@@ -2,16 +2,19 @@ var request;
 
 function home(context, next) {
     console.log('home')
+    floatingHeader.expanded = false
     $('main').css('height', 'calc(100vh + 300px)')
     next()
 }
 
 function about(context, next) {
     console.log('about')
-    window.scrollTo(0, 300)
     if (context.content == null) {
+        next()
         return
     }
+    window.scrollTo(0, 300)
+    floatingHeader.expanded = false
     $('main')
         .html(context.content)
         .css('height', '')
@@ -20,8 +23,10 @@ function about(context, next) {
 
 function test(context, next) {
     if (context.content == null) {
+        next()
         return
     }
+    floatingHeader.expanded = true
     console.log('test')
     $('main').html(context.content)
     next()
@@ -38,10 +43,11 @@ function notFound(context, next) {
 function resolve(context, next) {
     request.then(
         success => success.text(),
-        fail => "network error",
+        () => "network error",
     ).then(result => {
         if (result == "network error") {
-            // Handle network error
+            floatingHeader.expanded = true
+            $('main').append($('#network-error')[0].content).css('height', '')
         }
         else {
             context.content = result
