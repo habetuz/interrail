@@ -3,7 +3,7 @@ var request;
 function home(context, next) {
     console.log('home')
     floatingHeader.expanded = false
-    $('main').css('height', 'calc(100vh + 300px)')
+    $('main').css('height', 'calc(200vh + 300px)')
     next()
 }
 
