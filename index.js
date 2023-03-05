@@ -30,11 +30,10 @@ function resizeMap() {
     }
 }
 
-setTimeout(() => { floatingHeader.changeLanguage('de') }, 3000)
+setTimeout(() => { floatingHeader.language = 'de' }, 3000)
 
 floatingHeader.onCreation = () => {
     $('floating-header #bg').click(() => {
-        console.log(floatingHeader.isExpanded())
-        floatingHeader.setExpanded(!floatingHeader.isExpanded())
+        page('/test/')
     })
 }

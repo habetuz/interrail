@@ -20,6 +20,9 @@ class FloatingHeader extends HTMLElement {
         var right = 15 + ($(window).width() - 15 * 2) * scrollProgress
         var bottom = 15 + ($(window).height() - 15 * 2) * scrollProgress
 
+        var currRight = $('floating-header #bg')[0].getBoundingClientRect().right
+        var currBottom = $('floating-header #bg')[0].getBoundingClientRect().bottom
+
         var wrapper = $('floating-header #wrapper')[0].getBoundingClientRect()
         var rightWrapper = $(window).width() - wrapper.left - wrapper.width
         var bottomWrapper = $(window).height() - wrapper.top - wrapper.height
@@ -58,8 +61,7 @@ class FloatingHeader extends HTMLElement {
                 this.#inter = new TextScramble($('floating-header #inter')[0])
                 this.#rail = new TextScramble($('floating-header #rail')[0])
 
-                this.#expanded = this.getAttribute('expand') == 'true' ? true : false
-                this.setExpanded()
+                this.expanded = this.getAttribute('expand') == 'true' ? true : false
                 this.#updateSize()
                 new ResizeObserver(() => { this.#updateSize() }).observe($('floating-header #wrapper')[0])
 
@@ -82,8 +84,8 @@ class FloatingHeader extends HTMLElement {
         var expand = this.getAttribute('expand') == 'true' ? true : false
 
         if (expand != this.#expanded) {
-            this.#expanded = expand
             if (expand) {
+                this.#expanded = expand
                 anime({
                     targets: 'floating-header #bg',
                     left: 0,
@@ -94,10 +96,22 @@ class FloatingHeader extends HTMLElement {
                     duration: 1000,
                 })
             } else {
-                $('floating-header #bg')
-                    .css('left', '')
-                    .css('top', '')
-                this.#updateSize()
+                anime({
+                    targets: 'floating-header #bg',
+                    left: '15px',
+                    right: '15px',
+                    top: '15px',
+                    bottom: '15px',
+                    easing: 'easeInOutCubic',
+                    duration: 1000,
+                    complete: () => {
+                        $('floating-header #bg')
+                            .css('left', '')
+                            .css('top', '')
+                        this.#expanded = expand
+                        this.#updateSize()
+                    }
+                })
             }
         }
 
@@ -109,15 +123,15 @@ class FloatingHeader extends HTMLElement {
         }
     }
 
-    setExpanded(expand) {
-        this.setAttribute('expand', expand)
-    }
-
-    isExpanded() {
+    get expanded() {
         return this.#expanded
     }
 
-    changeLanguage(lan) {
+    set expanded(expand) {
+        this.setAttribute('expand', expand)
+    }
+
+    set language(lan) {
         this.setAttribute('lan', lan)
     }
 
