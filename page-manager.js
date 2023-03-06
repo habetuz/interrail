@@ -1,27 +1,45 @@
 var request;
 
 function home(context, next) {
-    console.log('home')
-    floatingHeader.expanded = false
-    $('main').css('height', 'calc(200vh + 300px)')
-    next()
-}
-
-function about(context, next) {
-    console.log('about')
     if (context.content == null) {
         next()
         return
     }
-    window.scrollTo(0, 300)
-    floatingHeader.expanded = false
-    $('main')
-        .html(context.content)
-        .css('height', '')
+    console.log('home')
+    $('main').html(context.content)
+}
+
+function shrinkBg(context, next) {
+    console.log('shrinkBg')
+    if ($('floating-header #wrapper')[0] == null) {
+        next()
+        return;
+    }
+    var wrapper = $('floating-header #wrapper')[0].getBoundingClientRect()
+    var rightWrapper = $(window).width() - wrapper.left - wrapper.width
+    var bottomWrapper = $(window).height() - wrapper.top - wrapper.height
+
+    floatingHeader.expandedSilent = false
+
+    anime({
+        targets: 'floating-header #bg',
+        bottom: bottomWrapper + 'px',
+        right: rightWrapper + 'px',
+        left: '15px',
+        top: '15px',
+        duration: 1000,
+        easing: 'easeInOutCubic',
+        complete: () => {
+            $('floating-header #bg')
+                .css('left', '')
+                .css('top', '')
+        },
+    })
+
     next()
 }
 
-function test(context, next) {
+function loadContent(context, next) {
     if (context.content == null) {
         next()
         return
@@ -47,7 +65,7 @@ function resolve(context, next) {
     ).then(result => {
         if (result == "network error") {
             floatingHeader.expanded = true
-            $('main').append($('#network-error')[0].content).css('height', '')
+            $('main').append($('#network-error')[0].content)
         }
         else {
             context.content = result
@@ -65,7 +83,6 @@ function transitionOut(context, next) {
         duration: 500,
         easing: 'easeInOutCubic',
         complete: () => {
-            $('main').html('')
             next()
         },
     })
@@ -84,6 +101,11 @@ function transitionIn(context, next) {
     })
 }
 
+function clearContent(context, next) {
+    $('main').html('')
+    next()
+}
+
 function requestContent(context, next) {
     var path = context.pathname
     if (path[path.length - 1] != '/') {
@@ -98,7 +120,16 @@ function resetScroll(context, next) {
     next()
 }
 
-page('/', transitionOut, home, transitionIn)
-page('/about/', requestContent, transitionOut, resolve, about, transitionIn)
-page('/test/', requestContent, transitionOut, resetScroll, resolve, test, transitionIn)
+function checkHandled(context, next) {
+    console.log(context)
+    if (context.handled) {
+        return
+    }
+
+    next()
+}
+
+page.redirect('/404.html', '/')
+page('/', shrinkBg, requestContent, transitionOut, resetScroll, resolve, home)
+page('*', requestContent, transitionOut, resetScroll, resolve, loadContent, transitionIn)
 page()

@@ -16,6 +16,8 @@ class FloatingHeader extends HTMLElement {
             return;
         }
 
+        var currRight = $('floating-header #bg').css('right')
+
         var scrollProgress = clamp(1 - document.documentElement.scrollTop / 300, 0, 1)
         var right = 15 + ($(window).width() - 15 * 2) * scrollProgress
         var bottom = 15 + ($(window).height() - 15 * 2) * scrollProgress
@@ -30,19 +32,23 @@ class FloatingHeader extends HTMLElement {
             bottom = bottomWrapper
         }
 
-        anime({
-            targets: 'floating-header #bg',
-            bottom: bottom + 'px',
-            right: right + 'px',
-            duration: 200,
-            easing: 'easeOutCubic'
-        })
+        $('floating-header #bg')
+            .css('right', right + 'px')
+            .css('bottom', bottom + 'px')
 
-        if (document.documentElement.scrollTop >= 300 && window.location.pathname == '/') {
-            page('/about/')
+        //anime({
+        //    targets: 'floating-header #bg',
+        //    bottom: bottom + 'px',
+        //    right: right + 'px',
+        //    duration: 200,
+        //    easing: 'easeOutCubic'
+        //})
+
+        if (document.documentElement.scrollTop >= 300 && currRight != '15px') {
+            transitionIn()
         }
-        else if (document.documentElement.scrollTop < 300 && window.location.pathname == '/about/') {
-            page('/')
+        else if (document.documentElement.scrollTop < 300 && currRight == '15px') {
+            transitionOut(null, () => { })
         }
 
     }
@@ -133,6 +139,11 @@ class FloatingHeader extends HTMLElement {
     }
 
     set expanded(expand) {
+        this.setAttribute('expand', expand)
+    }
+
+    set expandedSilent(expand) {
+        this.#expanded = expand
         this.setAttribute('expand', expand)
     }
 
