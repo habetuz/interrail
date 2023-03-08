@@ -7,6 +7,7 @@ function home(context, next) {
     }
     console.info('Page manager event: home')
     $('main').html(context.content)
+    document.addEventListener('scroll', updateScroll)
 }
 
 function shrinkBg(context, next) {
@@ -90,6 +91,7 @@ function transitionOut(context, next) {
         duration: 500,
         easing: 'easeInOutCubic',
         complete: () => {
+            $('main').css('visibility', 'hidden')
             next()
         },
     })
@@ -97,6 +99,7 @@ function transitionOut(context, next) {
 
 function transitionIn(context, next) {
     console.info('Page manager event: transitionIn')
+    $('main').css('visibility', '')
     anime({
         targets: 'main>*',
         translateY: [20, 0],
@@ -111,6 +114,7 @@ function transitionIn(context, next) {
 function clearContent(context, next) {
     console.info('Page manager event: clearContent')
     $('main').html('')
+    document.removeEventListener('scroll', updateScroll)
     next()
 }
 

@@ -109,6 +109,12 @@ floating-header #bg {
     z-index: -1;
 }
 
+img {
+    border: solid;
+    border-width: 3px;
+    border-color: var(--main-dark-color)
+}
+
 .center-all {
     left: 50%;
     top: 50%;
