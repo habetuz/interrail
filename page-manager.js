@@ -5,12 +5,12 @@ function home(context, next) {
         next()
         return
     }
-    console.log('home')
+    console.info('Page manager event: home')
     $('main').html(context.content)
 }
 
 function shrinkBg(context, next) {
-    console.log('shrinkBg')
+    console.info('Page manager event: shrinkBg')
     if ($('floating-header #wrapper')[0] == null) {
         next()
         return;
@@ -27,7 +27,7 @@ function shrinkBg(context, next) {
         right: rightWrapper + 'px',
         left: '15px',
         top: '15px',
-        duration: 1000,
+        duration: 500,
         easing: 'easeInOutCubic',
         complete: () => {
             $('floating-header #bg')
@@ -44,38 +44,45 @@ function loadContent(context, next) {
         next()
         return
     }
+    console.info('Page manager event: loadContent')
     floatingHeader.expanded = true
-    console.log('test')
     $('main').html(context.content)
     next()
 }
 
-function notFound(context, next) {
-    if (window.location.pathname == context.pathname) {
-        next()
-        return
-    }
-    next()
-}
-
 function resolve(context, next) {
+    console.info('Page manager event: resolve')
     request.then(
-        success => success.text(),
-        () => "network error",
-    ).then(result => {
-        if (result == "network error") {
+        response => {
+            if (response.status == 200) {
+                response.blob().then(blob => blob.text().then(result => {
+                    context.content = result
+                    next()
+                }))
+            }
+            else if (response.status == 404) {
+                floatingHeader.expanded = true
+                $('main').append($('#not-found-error')[0].content.cloneNode(true))
+                transitionIn()
+            }
+            else {
+                floatingHeader.expanded = true
+                $('main').append($('#unknown-error')[0].content.cloneNode(true))
+                console.error(response)
+                transitionIn()
+            }
+        },
+        _ => {
             floatingHeader.expanded = true
-            $('main').append($('#network-error')[0].content)
+            $('main')[0].appendChild($('#network-error')[0].content.cloneNode(true))
+            transitionIn()
         }
-        else {
-            context.content = result
-        }
-        next()
-    })
+    )
+
 }
 
 function transitionOut(context, next) {
-    console.log('out')
+    console.info('Page manager event: transitionOut')
     anime({
         targets: 'main>*',
         translateY: [0, 20],
@@ -89,7 +96,7 @@ function transitionOut(context, next) {
 }
 
 function transitionIn(context, next) {
-    console.log('in')
+    console.info('Page manager event: transitionIn')
     anime({
         targets: 'main>*',
         translateY: [20, 0],
@@ -102,11 +109,13 @@ function transitionIn(context, next) {
 }
 
 function clearContent(context, next) {
+    console.info('Page manager event: clearContent')
     $('main').html('')
     next()
 }
 
 function requestContent(context, next) {
+    console.info('Page manager event: requestContent')
     var path = context.pathname
     if (path[path.length - 1] != '/') {
         path += '/'
@@ -116,20 +125,17 @@ function requestContent(context, next) {
 }
 
 function resetScroll(context, next) {
+    console.info('Page manager event: resetScroll')
     window.scrollTo(0, 0)
     next()
 }
 
-function checkHandled(context, next) {
-    console.log(context)
-    if (context.handled) {
-        return
-    }
-
+function printInfo(context, next) {
+    console.info('Page manager event: Moving to page "' + context.pathname + '"!')
     next()
 }
 
 page.redirect('/404.html', '/')
-page('/', shrinkBg, requestContent, transitionOut, resetScroll, resolve, home)
-page('*', requestContent, transitionOut, resetScroll, resolve, loadContent, transitionIn)
+page('/', printInfo, shrinkBg, requestContent, transitionOut, clearContent, resetScroll, resolve, home)
+page('*', printInfo, requestContent, transitionOut, clearContent, resetScroll, resolve, loadContent, transitionIn)
 page()

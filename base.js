@@ -8,7 +8,7 @@ var svgViewport
 fetch('/src/map.svg')
     .then((response) => response.text())
     .then((svg) => {
-        svgRoot = SVG().addTo('#map_container').size('1920px', '1080px').svg(svg)
+        svgRoot = SVG().addTo('#map-container').size('1920px', '1080px').svg(svg)
         svgMap = svgRoot.findOne('#Map')
         svgViewport = svgRoot.findOne('#Viewport').clone()
         resizeMap();
@@ -24,11 +24,11 @@ function resizeMap() {
     var yScale = window.innerHeight / svgViewport.height()
 
     if (xScale < 1 || yScale < 1) {
-        $('#map_container').css('transform', 'scale(1)')
+        $('#map-container').css('transform', 'scale(1)')
     } else if (xScale < yScale) {
-        $('#map_container').css('transform', 'scale(' + xScale + ')')
+        $('#map-container').css('transform', 'scale(' + xScale + ')')
     } else {
-        $('#map_container').css('transform', 'scale(' + yScale + ')')
+        $('#map-container').css('transform', 'scale(' + yScale + ')')
     }
 }
 

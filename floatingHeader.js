@@ -104,7 +104,7 @@ class FloatingHeader extends HTMLElement {
                     top: 0,
                     bottom: 0,
                     easing: 'easeInOutCubic',
-                    duration: 1000,
+                    duration: 500,
                 })
             } else {
                 anime({
@@ -114,7 +114,7 @@ class FloatingHeader extends HTMLElement {
                     top: '15px',
                     bottom: '15px',
                     easing: 'easeInOutCubic',
-                    duration: 1000,
+                    duration: 500,
                     complete: () => {
                         $('floating-header #bg')
                             .css('left', '')
