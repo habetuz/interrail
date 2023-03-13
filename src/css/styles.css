@@ -45,6 +45,13 @@ p {
     font-weight: 500;
 }
 
+hr {
+    border: none;
+    border-top: solid;
+    border-width: 2px;
+    border-color: var(--main-dark-color);
+}
+
 button::before {
     content: '';
     position: absolute;

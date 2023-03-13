@@ -61,7 +61,7 @@ class FloatingHeader extends HTMLElement {
     onCreation
 
     connectedCallback() {
-        fetch("/floatingHeader.html")
+        fetch("/src/html/floatingHeader.html")
             .then(response => response.text())
             .then(html => {
                 this.innerHTML = html

@@ -1,0 +1,28 @@
+[
+    {
+        "type": "city",
+        "name": "Freiburg",
+        "link": "freiburg",
+        "date": "29. Mai"
+    },
+    {
+        "type": "country",
+        "name": "Dänemark"
+    },
+    {
+        "type": "city",
+        "name": "Kjøbenhavn",
+        "link": "kopenhagen",
+        "date": "01. Juni"
+    },
+    {
+        "type": "country",
+        "name": "Schweden"
+    },
+    {
+        "type": "city",
+        "name": "Göteborg",
+        "link": "goeteborg",
+        "date": "05. Juni"
+    }
+]

@@ -5,7 +5,7 @@ var svgRoot
 var svgMap
 var svgViewport
 
-fetch('/src/map.svg')
+fetch('/src/img/map.svg')
     .then((response) => response.text())
     .then((svg) => {
         svgRoot = SVG().addTo('#map-container').size('1920px', '1080px').svg(svg)
