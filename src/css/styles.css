@@ -52,6 +52,11 @@ hr {
     border-color: var(--main-dark-color);
 }
 
+a {
+    text-decoration: none;
+    font-weight: 700;
+}
+
 button::before {
     content: '';
     position: absolute;
@@ -136,6 +141,32 @@ img {
 .center-vertically {
     top: 50%;
     transform: translateY(-50%)
+}
+
+.animated-hover::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: -5px;
+    right: -5px;
+    top: -5px;
+    bottom: -5px;
+    background-color: var(--main-dark-color);
+    transition: transform .5s;
+    transform-origin: bottom;
+    transform: scaleY(0);
+}
+
+.animated-hover:hover::before {
+    transform: scaleY(1);
+}
+
+.animated-hover {
+    transition: color .5s;
+}
+
+.animated-hover:hover {
+    color: var(--main-color)
 }
 
 #map-container {

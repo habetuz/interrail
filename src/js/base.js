@@ -33,9 +33,3 @@ function resizeMap() {
 }
 
 setTimeout(() => { floatingHeader.language = 'de' }, 3000)
-
-floatingHeader.onCreation = () => {
-    $('floating-header #bg').click(() => {
-        page('/test/')
-    })
-}
