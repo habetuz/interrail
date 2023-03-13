@@ -7,7 +7,7 @@ function home(context, next) {
     }
     console.info('Page manager event: home')
     $('main').html(context.content)
-    document.addEventListener('scroll', updateScroll)
+    document.addEventListener('scroll', aboutUpdateScroll)
 }
 
 function shrinkBg(context, next) {
@@ -114,7 +114,7 @@ function transitionIn(context, next) {
 function clearContent(context, next) {
     console.info('Page manager event: clearContent')
     $('main').html('')
-    document.removeEventListener('scroll', updateScroll)
+    document.removeEventListener('scroll', aboutUpdateScroll)
     next()
 }
 

@@ -24,5 +24,11 @@
         "name": "Göteborg",
         "link": "goeteborg",
         "date": "05. Juni"
+    },
+    {
+        "type": "city",
+        "name": "Stockholm",
+        "link": "stockholm",
+        "date": "09. Juni"
     }
 ]

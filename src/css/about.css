@@ -1,4 +1,90 @@
+about-timeline {
+    position: absolute;
+    height: fit-content;
+}
+
+about-timeline #timeline {
+    position: absolute;
+    border-left: solid;
+    border-right: solid;
+    border-width: calc(var(--line-width)/2);
+    border-radius: var(--line-width);
+    border-color: var(--main-dark-color);
+    width: 0;
+    height: 100%;
+    left: 0;
+}
+
+about-timeline #timeline-content * {
+    position: relative;
+    color: var(--main-dark-color);
+    display: flex;
+}
+
+about-timeline #timeline-content .country::before {
+    position: relative;
+    left: calc(-25px + var(--line-width)/2);
+    content: '';
+    width: 50px;
+    height: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-top: solid;
+    border-bottom: solid;
+    border-width: 2px;
+    border-radius: 2px;
+    border-color: var(--main-dark-color);
+    display: block;
+}
+
+about-timeline #timeline-content .country {
+    font-size: smaller;
+    font-weight: 500;
+    opacity: .77;
+}
+
+about-timeline #timeline-content .city:first-child::before {
+    left: calc(var(--line-width) * .18);
+    width: calc(var(--line-width) * .6);
+    height: calc(var(--line-width) * .6);
+    opacity: 1;
+}
+
+about-timeline #timeline-content .city::before {
+    position: relative;
+    left: calc(var(--line-width) * .27);
+    content: '';
+    width: calc(var(--line-width) * .4);
+    height: calc(var(--line-width) * .4);
+    border-radius: 50%;
+    background-color: white;
+    display: block;
+    opacity: .6;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+}
+
+about-timeline #timeline-content .city {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-size: medium;
+    font-weight: 600;
+}
+
+about-timeline #timeline-content .city:first-child {
+    padding-top: 0;
+}
+
+about-timeline #timeline-content .city:last-child {
+    padding-bottom: 0;
+}
+
+
+
 #about-wrapper {
+    --line-width: 20px;
+    counter-reset: --child-number;
     pointer-events: none;
     position: fixed;
     left: 15px;
@@ -11,7 +97,8 @@
 #about-scroll-wrapper {
     pointer-events: none;
     position: fixed;
-    left: 0;
+    left: 50%;
+    padding: 30px;
     right: 0;
 }
 
@@ -21,7 +108,7 @@
     padding: 30px;
     position: fixed;
     left: 0;
-    width: 50%;
+    width: calc(50% - 60px);
 }
 
 #about-image {
