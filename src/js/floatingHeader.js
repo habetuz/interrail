@@ -18,13 +18,13 @@ class FloatingHeader extends HTMLElement {
 
         var currRight = $('floating-header #bg').css('right')
 
-        var scrollProgress = clamp(1 - document.documentElement.scrollTop / 300, 0, 1)
-        var right = 15 + ($(window).width() - 15 * 2) * scrollProgress
-        var bottom = 15 + ($(window).height() - 15 * 2) * scrollProgress
-
+        var scrollProgress = clamp(document.documentElement.scrollTop / 300, 0, 1)
         var wrapper = $('floating-header #wrapper')[0].getBoundingClientRect()
         var rightWrapper = $(window).width() - wrapper.left - wrapper.width
         var bottomWrapper = $(window).height() - wrapper.top - wrapper.height
+        var right = rightWrapper - (rightWrapper - 15) * scrollProgress
+        var bottom = bottomWrapper - (bottomWrapper - 15) * scrollProgress
+
         if (right == null || right > rightWrapper) {
             right = rightWrapper
         }
