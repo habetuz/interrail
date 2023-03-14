@@ -3,6 +3,27 @@ function aboutUpdateScroll() {
     $('#about-scroll-wrapper').css('top', -scrollPos)
 }
 
+function aboutResize(media) {
+    if (media.matches) {
+        $('#about-wrapper').css({ top: '82px' })
+        $('#about-scroll-wrapper').css({ left: '0', 'padding-right': '30px' })
+            .prepend($('#about-description'))
+        $('#about-description').css({ position: 'relative', padding: '0', width: '100%' })
+        $('about-timeline').css({ 'margin-top': '100px', left: '30px' })
+    }
+    else {
+        $('#about-wrapper').css({ top: '' }).prepend($('#about-description'))
+        $('#about-scroll-wrapper').css({ left: '', 'padding-right': '' })
+        $('#about-description').css({ position: '', padding: '', width: '' })
+        $('about-timeline').css({ 'margin-top': '', left: '' })
+    }
+
+    $('#about-spacer').css('height', 'calc(' + (300 + $('#about-scroll-wrapper')[0].getBoundingClientRect().height) + "px + 100vh)")
+}
+
+var media = window.matchMedia("(max-width: 600px)")
+media.addEventListener('change', aboutResize)
+
 class AboutTimeline extends HTMLElement {
     connectedCallback() {
         fetch('src/data/route.json').then(route => route.json()).then(route => {
@@ -19,7 +40,8 @@ class AboutTimeline extends HTMLElement {
                     )
                 }
             }
-            $('#about-spacer').css('height', 'calc(' + (300 + $('#about-scroll-wrapper')[0].getBoundingClientRect().height) + "px + 100vh)")
+
+            aboutResize(media)
         })
     }
 }

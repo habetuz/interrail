@@ -106,7 +106,7 @@ about-timeline .city {
 #about-image {
     display: block;
     position: relative;
-    width: 100%;
+    width: calc(100% - 6px);
     padding-bottom: 50%;
 }
 
