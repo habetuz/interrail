@@ -3,7 +3,8 @@ function aboutUpdateScroll() {
     $('#about-scroll-wrapper').css('top', -scrollPos)
 }
 
-function aboutResize(media) {
+var media = window.matchMedia("(max-width: 600px)")
+function aboutResize() {
     if (media.matches) {
         $('#about-wrapper').css({ top: '82px' })
         $('#about-scroll-wrapper').css({ left: '0', 'padding-right': '30px' })
@@ -18,11 +19,9 @@ function aboutResize(media) {
         $('about-timeline').css({ 'margin-top': '', left: '' })
     }
 
-    $('#about-spacer').css('height', 'calc(' + (300 + $('#about-scroll-wrapper')[0].getBoundingClientRect().height) + "px + 100vh)")
+    $('#about-spacer').css('height', 'calc(' + (300 + Math.max(0, $('#about-scroll-wrapper')[0].getBoundingClientRect().height - $('#about-wrapper').height())) + "px + 100vh)")
 }
 
-var media = window.matchMedia("(max-width: 600px)")
-media.addEventListener('change', aboutResize)
 
 class AboutTimeline extends HTMLElement {
     connectedCallback() {
@@ -42,7 +41,12 @@ class AboutTimeline extends HTMLElement {
             }
 
             aboutResize(media)
+            window.addEventListener('resize', aboutResize)
         })
+    }
+
+    disconnectedCallback() {
+        window.removeEventListener('resize', aboutResize)
     }
 }
 

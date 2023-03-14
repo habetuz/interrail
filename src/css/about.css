@@ -90,6 +90,7 @@ about-timeline .city {
     position: fixed;
     left: 50%;
     padding-top: 100px;
+    padding-bottom: 100px;
     padding-left: 30px;
     right: 0;
 }
