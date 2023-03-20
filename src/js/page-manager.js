@@ -17,13 +17,13 @@ function shrinkBg(context, next) {
         return;
     }
     var wrapper = $('floating-header #wrapper')[0].getBoundingClientRect()
-    var rightWrapper = $(window).width() - wrapper.left - wrapper.width
-    var bottomWrapper = $(window).height() - wrapper.top - wrapper.height
+    var rightWrapper = $(window).width() - wrapper.left - wrapper.width - 15
+    var bottomWrapper = $(window).height() - wrapper.top - wrapper.height - 15
 
     floatingHeader.expandedSilent = false
 
     anime({
-        targets: 'floating-header #bg',
+        targets: '#background',
         bottom: bottomWrapper + 'px',
         right: rightWrapper + 'px',
         left: '15px',
@@ -31,7 +31,7 @@ function shrinkBg(context, next) {
         duration: 500,
         easing: 'easeInOutCubic',
         complete: () => {
-            $('floating-header #bg')
+            $('#background')
                 .css('left', '')
                 .css('top', '')
         },
@@ -139,7 +139,7 @@ function printInfo(context, next) {
     next()
 }
 
-page.redirect('/404.html', '/')
+page.redirect('/404.html', '/freiburg')
 page('/', printInfo, shrinkBg, requestContent, transitionOut, clearContent, resetScroll, resolve, home)
 page('*', printInfo, requestContent, transitionOut, clearContent, resetScroll, resolve, loadContent, transitionIn)
 page()

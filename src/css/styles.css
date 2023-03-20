@@ -14,7 +14,7 @@ body {
     width: 100%;
     padding: 0;
     margin: 0;
-    background-color: var(--bg-color);
+    background-color: var(--main-color);
 }
 
 main {
@@ -94,6 +94,7 @@ floating-header {
     user-select: none;
     position: fixed;
     display: block;
+    z-index: 2;
 }
 
 floating-header span {
@@ -107,18 +108,11 @@ floating-header #rail {
 
 floating-header #wrapper {
     position: fixed;
-    padding: 15px;
+    margin: 15px;
     left: 15px;
     top: 15px;
-}
-
-floating-header #bg {
-    position: fixed;
-    background-color: var(--main-color);
-    box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.2);
-    left: 15px;
-    top: 15px;
-    z-index: -1;
+    box-shadow: 0 0 12px 12px var(--main-color);
+    background-color: var(--main-color)
 }
 
 img {
@@ -175,6 +169,7 @@ img {
     height: 100lvh;
     position: fixed;
     transform-origin: center;
+    background-color: var(--bg-color);
 }
 
 #error-content-wrapper {
@@ -189,4 +184,12 @@ img {
     padding-left: 40px;
     padding-right: 40px;
     text-align: center;
+}
+
+#background {
+    position: fixed;
+    background-color: var(--main-color);
+    box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.2);
+    left: 15px;
+    top: 15px;
 }

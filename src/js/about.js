@@ -6,14 +6,13 @@ function aboutUpdateScroll() {
 var media = window.matchMedia("(max-width: 600px)")
 function aboutResize() {
     if (media.matches) {
-        $('#about-wrapper').css({ top: '82px' })
         $('#about-scroll-wrapper').css({ left: '0', 'padding-right': '30px' })
             .prepend($('#about-description'))
         $('#about-description').css({ position: 'relative', padding: '0', width: '100%' })
         $('about-timeline').css({ 'margin-top': '100px', left: '30px' })
     }
     else {
-        $('#about-wrapper').css({ top: '' }).prepend($('#about-description'))
+        $('#about-wrapper').prepend($('#about-description'))
         $('#about-scroll-wrapper').css({ left: '', 'padding-right': '' })
         $('#about-description').css({ position: '', padding: '', width: '' })
         $('about-timeline').css({ 'margin-top': '', left: '' })

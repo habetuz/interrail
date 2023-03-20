@@ -16,12 +16,12 @@ class FloatingHeader extends HTMLElement {
             return;
         }
 
-        var currRight = $('floating-header #bg').css('right')
+        var currRight = $('#background').css('right')
 
         var scrollProgress = clamp(document.documentElement.scrollTop / 300, 0, 1)
         var wrapper = $('floating-header #wrapper')[0].getBoundingClientRect()
-        var rightWrapper = $(window).width() - wrapper.left - wrapper.width
-        var bottomWrapper = $(window).height() - wrapper.top - wrapper.height
+        var rightWrapper = $(window).width() - wrapper.left - wrapper.width - 15
+        var bottomWrapper = $(window).height() - wrapper.top - wrapper.height - 15
         var right = rightWrapper - (rightWrapper - 15) * scrollProgress
         var bottom = bottomWrapper - (bottomWrapper - 15) * scrollProgress
 
@@ -32,12 +32,12 @@ class FloatingHeader extends HTMLElement {
             bottom = bottomWrapper
         }
 
-        $('floating-header #bg')
+        $('#background')
             .css('right', right + 'px')
             .css('bottom', bottom + 'px')
 
         //anime({
-        //    targets: 'floating-header #bg',
+        //    targets: '#background',
         //    bottom: bottom + 'px',
         //    right: right + 'px',
         //    duration: 200,
@@ -98,7 +98,7 @@ class FloatingHeader extends HTMLElement {
             if (expand) {
                 this.#expanded = expand
                 anime({
-                    targets: 'floating-header #bg',
+                    targets: '#background',
                     left: 0,
                     right: 0,
                     top: 0,
@@ -108,7 +108,7 @@ class FloatingHeader extends HTMLElement {
                 })
             } else {
                 anime({
-                    targets: 'floating-header #bg',
+                    targets: '#background',
                     left: '15px',
                     right: '15px',
                     top: '15px',
@@ -116,7 +116,7 @@ class FloatingHeader extends HTMLElement {
                     easing: 'easeInOutCubic',
                     duration: 500,
                     complete: () => {
-                        $('floating-header #bg')
+                        $('#background')
                             .css('left', '')
                             .css('top', '')
                         this.#expanded = expand
