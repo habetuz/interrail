@@ -7,17 +7,17 @@
     },
     {
         "type": "country",
-        "name": "Dänemark"
+        "name": "Danmark"
     },
     {
         "type": "city",
-        "name": "Kjøbenhavn",
+        "name": "København",
         "link": "kopenhagen",
         "date": "01. Juni"
     },
     {
         "type": "country",
-        "name": "Schweden"
+        "name": "Sverige"
     },
     {
         "type": "city",

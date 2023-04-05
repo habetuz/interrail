@@ -139,7 +139,7 @@ function printInfo(context, next) {
     next()
 }
 
-page.redirect('/404.html', '/freiburg')
+page.redirect('/404.html', '/')
 page('/', printInfo, shrinkBg, requestContent, transitionOut, clearContent, resetScroll, resolve, home)
 page('*', printInfo, requestContent, transitionOut, clearContent, resetScroll, resolve, loadContent, transitionIn)
 page()
