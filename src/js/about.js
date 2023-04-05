@@ -39,10 +39,6 @@ class AboutTimeline extends HTMLElement {
                 }
             }
 
-            $('about-timeline .city:last-child').append(
-                '<div class="ripple-pulse"></>'
-            )
-
             aboutResize(media)
             window.addEventListener('resize', aboutResize)
         })
