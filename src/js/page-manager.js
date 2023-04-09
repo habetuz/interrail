@@ -46,7 +46,6 @@ function loadContent(context, next) {
         return
     }
     console.info('Page manager event: loadContent')
-    floatingHeader.expanded = true
     $('main').html(context.content)
     next()
 }
@@ -134,12 +133,18 @@ function resetScroll(context, next) {
     next()
 }
 
+function expandBG(context, next) {
+    console.info('Page manager event: expandBG')
+    floatingHeader.expanded = true;
+    next()
+}
+
 function printInfo(context, next) {
     console.info('Page manager event: Moving to page "' + context.pathname + '"!')
     next()
 }
 
-page.redirect('/404.html', '/freiburg')
+page.redirect('/404.html', '/')
 page('/', printInfo, shrinkBg, requestContent, transitionOut, clearContent, resetScroll, resolve, home)
-page('*', printInfo, requestContent, transitionOut, clearContent, resetScroll, resolve, loadContent, transitionIn)
+page('*', printInfo, requestContent, transitionOut, expandBG, clearContent, resolve, loadContent, resetScroll, transitionIn)
 page()
