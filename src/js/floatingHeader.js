@@ -105,8 +105,12 @@ class FloatingHeader extends HTMLElement {
                     bottom: 0,
                     easing: 'easeInOutCubic',
                     duration: 500,
+                    complete: () => {
+                        $('#map-container').css('visibility', 'hidden')
+                    },
                 })
             } else {
+                $('#map-container').css('visibility', '')
                 anime({
                     targets: '#background',
                     left: '15px',
@@ -121,7 +125,7 @@ class FloatingHeader extends HTMLElement {
                             .css('top', '')
                         this.#expanded = expand
                         this.#updateSize()
-                    }
+                    },
                 })
             }
         }
@@ -143,6 +147,11 @@ class FloatingHeader extends HTMLElement {
     }
 
     set expandedSilent(expand) {
+        if (expand) {
+            $('#map-container').css('visibility', 'hidden')
+        } else {
+            $('#map-container').css('visibility', '')
+        }
         this.#expanded = expand
         this.setAttribute('expand', expand)
     }

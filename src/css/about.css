@@ -1,12 +1,21 @@
 about-timeline {
     position: relative;
-    border-left: solid;
-    border-width: var(--line-width);
-    border-radius: var(--line-width);
-    border-color: var(--main-dark-color);
     width: 0;
     height: fit-content;
     display: block;
+    width: fit-content;
+    margin-inline: auto;
+}
+
+about-timeline::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: var(--line-width);
+    background-color: var(--main-dark-color);
+    border-radius: var(--line-width);
+    top: 0;
+    left: calc(-1 * var(--line-width));
 }
 
 about-timeline * {
