@@ -1,12 +1,4 @@
-var request;
-
 function home(context, next) {
-    if (context.content == null) {
-        next()
-        return
-    }
-    console.info('Page manager event: home')
-    $('main').html(context.content)
     document.addEventListener('scroll', aboutUpdateScroll)
 }
 
@@ -46,13 +38,15 @@ function loadContent(context, next) {
         return
     }
     console.info('Page manager event: loadContent')
-    $('main').html(context.content)
+    console.log(context)
+    $('main').html(context.wrapper.html())
+    $('#about-description, #content').html(context.content)
     next()
 }
 
 function resolve(context, next) {
     console.info('Page manager event: resolve')
-    request.then(
+    context.request.then(
         response => {
             if (response.status == 200) {
                 response.blob().then(blob => blob.text().then(result => {
@@ -117,13 +111,20 @@ function clearContent(context, next) {
     next()
 }
 
-function requestContent(context, next) {
-    console.info('Page manager event: requestContent')
+function requestAbout(context, next) {
+    console.info('Page manager event: requestAbout')
+
+    context.request = fetch('about.html')
+    context.wrapper = $('#about-wrapper').clone()
+    next()
+}
+
+function requestArticle(context, next) {
+    console.info('Page manager event: requestArticle')
+
     var path = context.pathname
-    if (path[path.length - 1] != '/') {
-        path += '/'
-    }
-    request = fetch(path + 'content.html')
+    context.request = fetch('articles/' + path.replace('/', '') + '.html')
+    context.wrapper = $('#article-wrapper').clone()
     next()
 }
 
@@ -145,6 +146,6 @@ function printInfo(context, next) {
 }
 
 page.redirect('/404.html', '/')
-page('/', printInfo, shrinkBg, requestContent, transitionOut, clearContent, resetScroll, resolve, home)
-page('*', printInfo, requestContent, transitionOut, expandBG, clearContent, resolve, loadContent, resetScroll, transitionIn)
+page('/', printInfo, shrinkBg, requestAbout, transitionOut, clearContent, resetScroll, resolve, loadContent, home)
+page('*', printInfo, requestArticle, transitionOut, expandBG, clearContent, resolve, loadContent, resetScroll, transitionIn)
 page()
