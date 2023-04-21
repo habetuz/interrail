@@ -16,9 +16,9 @@ fetch('/src/img/map.svg')
 
 addEventListener("resize", resizeMap);
 function resizeMap() {
-    svgMap.move(
-        -svgViewport.x() + (window.innerWidth - svgViewport.width()) / 2,
-        -svgViewport.y() + (window.innerHeight - svgViewport.height()) / 2)
+    var xTranslate = -svgViewport.x() + (window.innerWidth - svgViewport.width()) / 2
+    var yTranslate = -svgViewport.y() + (window.innerHeight - svgViewport.height()) / 2
+    svgMap.attr('transform', `translate(${xTranslate} ${yTranslate})`)
 
     var xScale = window.innerWidth / svgViewport.width()
     var yScale = window.innerHeight / svgViewport.height()
