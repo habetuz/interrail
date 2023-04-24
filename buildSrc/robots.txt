@@ -1,0 +1,1 @@
+allow:/404.html

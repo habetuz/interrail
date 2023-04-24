@@ -1,0 +1,18 @@
+{
+    "Deutschland": {
+        "inter": "ZWISCHEN",
+        "rail": "SCHIENE"
+    },
+    "England": {
+        "inter": "INTER",
+        "rail": "RAIL"
+    },
+    "Denmark": {
+        "inter": "MELLEM",
+        "rail": "SKINNER"
+    },
+    "Sverige": {
+        "inter": "MELLAN",
+        "rail": "RÄLS"
+    }
+}
