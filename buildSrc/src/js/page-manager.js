@@ -38,7 +38,6 @@ function loadContent(context, next) {
         return
     }
     console.info('Page manager event: loadContent')
-    console.log(context)
     $('main').html(context.wrapper.html())
     $('#about-description, #content').html(context.content)
     next()

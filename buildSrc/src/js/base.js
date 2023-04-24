@@ -32,4 +32,4 @@ function resizeMap() {
     }
 }
 
-setTimeout(() => { floatingHeader.language = 'de' }, 3000)
+setTimeout(() => { floatingHeader.language = 'Deutschland' }, 3000)
