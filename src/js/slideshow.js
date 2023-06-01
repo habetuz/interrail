@@ -5,4 +5,4 @@ class SlideShow extends HTMLElement{connectedCallback(){var t=this.getAttribute(
                 border: 2px solid var(--main-color) !important;
             }
         </style>
-        `)[0]);$.get("src/img/"+t+"/index.json",t=>{t.forEach(t=>{n.append($(`<swiper-slide><img src='${t}'></img></swiper-slide>`))})});this.appendChild(n[0])}}customElements.define("slide-show",SlideShow)
+        `)[0]);$.get("src/img/"+t+"/index.json",t=>{t.forEach(t=>{n.append($(`<swiper-slide><img src='${t}'></img></swiper-slide>`))}),this.appendChild(n[0])})}}customElements.define("slide-show",SlideShow)
