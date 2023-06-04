@@ -14,5 +14,9 @@
     "Sverige": {
         "inter": "MELLAN",
         "rail": "RÄLS"
+    },
+    "Polska": {
+        "inter": "MIĘDZY",
+        "rail": "KOLEJAMI"
     }
 }
