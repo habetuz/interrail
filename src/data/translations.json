@@ -18,5 +18,9 @@
     "Polska": {
         "inter": "MIĘDZY",
         "rail": "KOLEJAMI"
+    },
+    "Česko": {
+        "inter": "MEZI",
+        "rail": "ŽELEZNICÍ"
     }
 }
