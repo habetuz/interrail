@@ -3,6 +3,10 @@
         "inter": "ZWISCHEN",
         "rail": "SCHIENE"
     },
+    "Österreich": {
+        "inter": "ZWISCHEN",
+        "rail": "SCHIENE"
+    },
     "England": {
         "inter": "INTER",
         "rail": "RAIL"
@@ -26,5 +30,9 @@
     "Slovensko": {
         "inter": "MEDZI",
         "rail": "ŽELEZNICOU"
+    },
+    "Magyarország": {
+        "inter": "SÍN",
+        "rail": "KÖZÖTT"
     }
 }
