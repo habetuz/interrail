@@ -42,5 +42,9 @@
     "Ελλάδα": {
         "inter": "ΜΕΤΑΞΥ",
         "rail": "ΣΙΔΗΡΟΔΡΟΜΟΥ"
+    },
+    "Italia": {
+        "inter": "TRA",
+        "rail": "FERROVIA"
     }
 }
