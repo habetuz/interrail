@@ -46,5 +46,9 @@
     "Italia": {
         "inter": "TRA",
         "rail": "FERROVIA"
+    },
+    "Slovenija": {
+        "inter": "MED",
+        "rail": "ŽELEZNICA"
     }
 }
